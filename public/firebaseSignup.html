@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <title>NodeJS OAuth</title>
+</head>
+<body>
+  
+  <div class="mb-5 text-center">
+    <h1>Sign Up with Firebase</h1>
+  </div>
+  
+  <div class="container rounded pb-3 pt-3" style="max-width: 300px; background-color: lightgrey">
+    <form action="/firebaseAuth/create-firebase-user" method="POST" id="firebase-form">
+      <div class="mb-3">
+        <label for="emailInput" class="form-label">Email address</label>
+        <input name="emailName" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="passwordInput" class="form-label">Password</label>
+        <input name="passwordName" type="password" class="form-control" id="passwordInput">
+      </div>
+      <!-- <div class="mb-3 form-check">
+        <input name="checkboxName" type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</body>
+
+<!-- for CDN method if preferred. -->
+<!-- <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js'
+
+  // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+  // import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js'
+
+  // Add Firebase products that you want to use
+  import { getAuth } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js'
+  import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js'
+</script> -->
+
+<!-- must allow other firebase CDN scripts before our own in order to use it  -->
+<script type="text/javascript" src="firebaseAppAuth.js"></script>
+</html>
