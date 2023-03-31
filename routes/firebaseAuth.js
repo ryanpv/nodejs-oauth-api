@@ -21,8 +21,8 @@ const router = express.Router();
 
 router.route('/')
   .get((req, res) => {
-    // res.send('hello world')
-    res.redirect('/firebaseAuth/signup')
+    res.redirect('/')
+    // res.end()
   })
 
 router.route('/signup')
@@ -60,7 +60,7 @@ router.route('/new-user-success')
 
 router.route('/sign-in')
   .post((req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     signInWithEmailAndPassword(auth, req.body.emailNameIndex, req.body.passwordNameIndex)
       .then((userCredential) => {
         const user = userCredential.user
@@ -68,12 +68,17 @@ router.route('/sign-in')
         const userEmail = user.email
         const userDisplayName = user.displayName
 
+        req.session.authenticated = true;
+        req.session.user = user
+        req.session.userID = userEmail
+
+
+        res.cookie('currentUserStatus', 'true', {
+          httpOnly: false
+        });
         res.cookie('currentUser', userEmail, {
           httpOnly: false,
           encode: String
-        });
-        res.cookie('currentUserStatus', 'true', {
-          httpOnly: false
         });
         res.cookie('firebase_access_token', user.accessToken, {
           httpOnly: true
@@ -83,10 +88,21 @@ router.route('/sign-in')
         res.redirect('/');
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err.message);
+        if (err) {
+          // console.log('wrong password');
+          res.send('check password')
+        }
         res.end()
       })
-  })
+  });
+
+
+router.route('/check-session')
+  .get((req, res) => {
+    console.log('session user: ', req.session.user);
+  res.redirect('/')
+});
 
 // router.route('/check-user')
 //   .get((req, res) => {

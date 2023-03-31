@@ -2,12 +2,15 @@ import "dotenv/config.js";
 import express from "express";
 import axios from "axios";
 import path from "path";
-
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 router.route('/')
   .get((req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'))
+    // res.sendFile('index.html', { root: 'public' })
+    res.redirect('/')
   });
 
 router.route('/auth')
@@ -27,6 +30,7 @@ router.route('/oauth-callback')
       const getToken = await axios.post('https://github.com/login/oauth/access_token', body, opts);
       const githubToken = await getToken
       console.log('github token: ', githubToken.data);
+
     
       res.cookie('currentUserStatus', 'true', {
         httpOnly: false
@@ -56,6 +60,11 @@ router.route('/githubUser')
 
     const user = await getUser
     console.log(user.data);
+
+    req.session.authenticated = true;
+    req.session.user = user.data;
+    req.session.userID = user.data.login
+
     res.cookie('currentUser', user.data.login, {
       httpOnly: false
     });

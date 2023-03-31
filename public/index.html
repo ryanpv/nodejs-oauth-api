@@ -19,6 +19,7 @@
     <!-- <div class="content authorized" style="display: none"> -->
       <h3>Signed in as<h3 id="logged-user"></h3>
       <a href="/clear-all-cookies" role="button" class="btn btn-danger">Log out of app</a>
+      <a href="/user" role="button" class="btn btn-primary">Check session</a>
       <!-- </div> -->
     </div>
     
@@ -59,10 +60,11 @@
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
+      <a href="/user" role="button" class="btn btn-secondary">Check session</a>
 
       <div class="mt-2">
         <p>No account?
-          <a href="/firebaseAuth/signup" role="button">Create user</a>
+          <a href="/firebaseAuth/signup" role="button">Create user with Firebase</a>
         </p>
       </div>
     </form>

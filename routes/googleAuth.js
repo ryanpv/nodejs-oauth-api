@@ -9,6 +9,11 @@ const router = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 
+router.route('/')
+  .get((req, res) => {
+  res.redirect('/');
+});
+
 router.route('/verify-token')
   .get(async (req, res) => {
     console.log('verify token route');
@@ -27,6 +32,9 @@ router.route('/verify-token')
       const userEmail = payload['email']
       // console.log('userid', userid);
       // console.log('email', userEmail);
+      req.session.authenticated = true;
+      req.session.user = jsonPayload;
+      req.session.userID = userEmail;
       
       console.log('payload', payload);
 
@@ -39,7 +47,7 @@ router.route('/verify-token')
       httpOnly: false
     });
 
-    console.log(req.cookies);
+
     res.redirect('/')
     
   } catch (err) {
